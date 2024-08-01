@@ -153,7 +153,7 @@ new_data <- data[, c(
   "Product_Collection",
   "Bus_Speed",
   "Cache",
-  "Graphics_Max_Dynamic_Frequency",
+  "PCI_Express_Revision",
   "Graphics_Video_Max_Memory",
   "Max_Memory_Bandwidth",
   "Max_nb_of_Memory_Channels",
@@ -161,7 +161,7 @@ new_data <- data[, c(
   "nb_of_Cores",
   "Processor_Base_Frequency",
   "Recommended_Customer_Price",
-  "Secure_Key",
+ "DirectX_Support",
   "TDP"
 )]
 str(new_data)
@@ -243,6 +243,21 @@ new_data$Cache <- ifelse(is.na(new_data$Cache), mean(new_data$Cache, na.rm = TRU
 new_data$Max_Memory_Size <- sapply(new_data$Max_Memory_Size, SizeMemory)
 new_data$Max_Memory_Size <- ifelse(is.na(new_data$Max_Memory_Size), mean(new_data$Max_Memory_Size, na.rm = TRUE), new_data$Max_Memory_Size)
 # ---------------------------
+### PCI_Express_Revisions ###
+# UNIT: None
+new_data <- new_data %>%
+  mutate(
+    PCI_Express_Revisions = sapply(PCI_Express_Revisions, get_num)
+  ) # Convert into number
+# ---------------------------
+### DirectX_Supports ###
+# UNIT: None
+new_data <- new_data %>%
+  mutate(
+    DirectX_Supports = sapply(DirectX_Supports, get_num)
+  ) # Convert into number
+# ---------------------------
+
 #################################
 #       Descriptive statistics
 #################################
